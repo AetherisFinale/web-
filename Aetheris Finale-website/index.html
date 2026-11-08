@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f1016">
+    <title>Aetheris Finale 宙光祭 | 官方網站</title>
+
+    <!-- SEO & 社群分享標籤 (Open Graph) -->
+    <meta name="description" content="Aetheris Finale 宙光祭 - サイリウムダンスの最高峰へ。踏碎深夜的黑暗，點燃屬於你的螢光軌跡。全台最強打師頂尖對決，即將引爆。">
+    <meta name="keywords" content="Aetheris Finale, 宙光祭, ヲタ芸, Wotagei, サイリウムダンス, 螢光棒舞蹈, 打師">
+    <meta property="og:title" content="Aetheris Finale 宙光祭 | サイリウムダンスの最高峰へ">
+    <meta property="og:description" content="踏碎深夜的黑暗，點燃屬於你的螢光軌跡。全台最強打師頂尖對決，即將引爆。">
+    <meta property="og:image" content="logo-web.png">
+    <meta property="og:type" content="website">
+
+    <!-- 引入高質感字體 (科技感數字/標題字體 Rajdhani + 繁體黑體 Noto Sans TC) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==================== 1. 全域變數與基礎設定 ==================== */
+        :root {
+            --primary: #ff6600; /* UO 經典螢光橘 */
+            --primary-glow: rgba(255, 102, 0, 0.45);
+            --primary-light: #ff8533;
+            --bg-dark: #000000;
+            --bg-navbar: #0f1016;
+            --bg-card: #12141e;
+            --bg-card-hover: #1a1c2b;
+            --border-dim: rgba(255, 255, 255, 0.12);
+            --border-highlight: rgba(255, 102, 0, 0.35);
+            --text-main: #ffffff;
+            --text-sub: #b3b7c2;
+            --nav-height: 65px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-top: var(--nav-height);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* 錨點滾動位置補償 (避免被固定置頂的導覽列擋住) */
+        section {
+            scroll-margin-top: var(--nav-height);
+        }
+
+        /* ==================== 2. 頂部橫條導覽列 ==================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height); 
+            background-color: rgba(15, 16, 22, 0.95); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-dim);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: space-between; 
+            padding: 0 40px; 
+            z-index: 9999;
+        }
+
+        /* 導覽列左側 LOGO */
+        .nav-logo-link {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            text-decoration: none;
+        }
+
+        .nav-logo {
+            height: 42px; 
+            width: auto;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 8px rgba(255, 102, 0, 0.3));
+            transition: transform 0.25s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.03);
+        }
+
+        /* 導覽列正中間：選單外容器 */
+        .nav-menu-container {
+            display: flex;
+            height: 100%; 
+            align-items: center;
+            border-left: 1px solid var(--border-dim); 
+        }
+
+        /* 通用選單項目樣式 */
+        .nav-item {
+            color: #f7f4eb; 
+            text-decoration: none;
+            font-size: 0.95em; 
+            font-weight: 500;
+            letter-spacing: 2px; 
+            padding: 0 25px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            border-right: 1px solid var(--border-dim); 
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .nav-item:hover {
+            color: #ffffff; 
+            background-color: #1a1c29; 
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* 當前作用中指示線 */
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+
+        .nav-item:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* 聯絡我們下拉基地 */
+        .nav-dropdown {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-dropdown > .nav-item {
+            border-right: 1px solid var(--border-dim);
+        }
+
+        .dropdown-arrow {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 0.8em;
+            transition: transform 0.25s ease;
+        }
+
+        .nav-dropdown:hover > .nav-item,
+        .nav-dropdown.active > .nav-item {
+            color: var(--primary); 
+            background-color: #1a1c29; 
+        }
+
+        .nav-dropdown.active .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* 下拉選單外框 (桌機版樣式) */
+        .dropdown-content {
+            display: none;             
+            position: absolute;
+            top: 100%;               
+            left: 50%;                 
+            transform: translateX(-50%); 
+            width: 260px;              
+            background-color: #0f1016; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 15px rgba(255, 102, 0, 0.15);
+            border: 1px solid var(--border-dim);
+            border-top: none;        
+            border-radius: 0 0 8px 8px; 
+            z-index: 10000;
+            padding: 10px;         
+            box-sizing: border-box;
+        }
+
+        /* 下拉選單單個按鈕 */
+        .dropdown-icon-link {
+            display: flex;
+            align-items: center;        
+            padding: 10px 14px;         
+            border-radius: 6px;         
+            background-color: #191b26;  
+            text-decoration: none;
+            transition: all 0.25s ease;
+            margin: 6px 0;              
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .dropdown-icon-link .btn-icon {
+            width: 24px;                
+            height: 24px;
+            object-fit: contain;
+            margin-right: 14px;         
+            flex-shrink: 0;             
+        }
+
+        .btn-text-group {
+            display: flex;
+            flex-direction: column;     
+            text-align: left;           
+        }
+
+        .btn-main-text {
+            color: #ffffff;
+            font-size: 0.9em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .btn-sub-text {
+            color: #888b99;             
+            font-size: 0.72em;           
+            margin-top: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        /* 社群按鈕滑過發光特效 */
+        .dropdown-icon-link.fb:hover { 
+            background-color: #1877f2; 
+            box-shadow: 0 0 12px rgba(24, 119, 242, 0.5); 
+        }
+        .dropdown-icon-link.fb:hover .btn-sub-text { color: #d0e3ff; }
+
+        .dropdown-icon-link.ig:hover { 
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+            box-shadow: 0 0 12px rgba(220, 39, 67, 0.5); 
+        }
+        .dropdown-icon-link.ig:hover .btn-sub-text { color: #ffd6e8; }
+
+        .dropdown-icon-link.email:hover { 
+            background-color: var(--primary); 
+            box-shadow: 0 0 12px var(--primary-glow); 
+        }
+        .dropdown-icon-link.email:hover .btn-sub-text { color: #ffe3d1; }
+
+        /* 右側平衡方塊 (桌機版專用) */
+        .nav-spacer {
+            width: 160px; 
+            flex-shrink: 0;
+        }
+
+        /* 手機版漢堡選單按鈕 */
+        .mobile-menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 10001;
+        }
+
+        .mobile-menu-toggle span {
+            display: block;
+            width: 26px;
+            height: 2px;
+            background-color: #ffffff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* 僅在桌機版啟用淡入微移動畫 */
+        @media (min-width: 861px) {
+            .nav-dropdown:hover .dropdown-content {
+                display: block; 
+                animation: fadeInMenu 0.2s ease forwards;
+            }
+
+            @keyframes fadeInMenu {
+                from { opacity: 0; transform: translate(-50%, -8px); }
+                to { opacity: 1; transform: translate(-50%, 0); }
+            }
+        }
+
+        /* ==================== 3. 首頁主視覺 (Hero Section) ==================== */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            min-height: calc(100vh - var(--nav-height)); 
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+
+        .hero-image-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* 深色漸層遮罩 */
+        .hero-image-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(15, 16, 22, 0.4) 0%, rgba(0, 0, 0, 0.85) 75%, #000000 100%),
+                        linear-gradient(to bottom, rgba(15, 16, 22, 0.8) 0%, transparent 40%, rgba(0, 0, 0, 0.95) 100%);
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(0.65) contrast(1.1);
+        }
+
+        .hero-overlay-content {
+            position: relative;
+            z-index: 2; 
+            text-align: center;
+            max-width: 860px;
+            padding: 0 20px;
+            animation: fadeInHero 1s ease-out;
+        }
+
+        @keyframes fadeInHero {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-subtitle {
+            font-family: "Rajdhani", "Noto Sans TC", sans-serif;
+            font-size: 1.25em;
+            letter-spacing: 8px;
+            color: var(--primary); 
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            text-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .hero-title {
+            font-family: "Rajdhani", "Noto Sans TC", sans-serif;
+            font-size: clamp(2.4rem, 6.5vw, 4.4rem);
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin: 0 0 20px 0;
+            color: #ffffff;
+            text-shadow: 0 0 30px rgba(255, 102, 0, 0.35);
+            line-height: 1.15;
+        }
+
+        .hero-title span {
+            color: #f7f4eb;
+            font-weight: 400;
+            margin-left: 10px;
+            font-size: 0.82em;
+            display: inline-block;
+        }
+
+        .hero-desc {
+            font-size: clamp(1rem, 2.2vw, 1.2em);
+            color: #d1d5db;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-action-btn {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary); 
+            padding: 14px 44px;
+            font-size: 1.05em;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 6px;
+            letter-spacing: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-action-btn:hover {
+            background-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 0 35px rgba(255, 102, 0, 0.75);
+            transform: translateY(-3px);
+        }
+
+        /* ==================== 4. 通用區塊排版樣式 ==================== */
+        .content-section {
+            padding: 100px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-family: "Rajdhani", sans-serif;
+            font-size: 0.95em;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .section-title-line {
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            margin: 18px auto 0;
+            box-shadow: 0 0 10px var(--primary-glow);
+            border-radius: 2px;
+        }
+
+        /* 卡片網格通用設計 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .info-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            border-radius: 10px;
+            padding: 32px 28px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            background-color: var(--bg-card-hover);
+            border-color: var(--border-highlight);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 102, 0, 0.15);
+        }
+
+        .info-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-badge {
+            display: inline-block;
+            font-family: "Rajdhani", sans-serif;
+            font-size: 0.85em;
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(255, 102, 0, 0.12);
+            padding: 4px 12px;
+            border-radius: 4px;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin: 0 0 14px 0;
+            color: #ffffff;
+        }
+
+        .card-desc {
+            color: var(--text-sub);
+            font-size: 0.95em;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* ==================== 5. 故事大綱區塊 (Story & Lore) ==================== */
+        .story-container {
+            background: linear-gradient(145deg, #10121b 0%, #08090d 100%);
+            border: 1px solid var(--border-dim);
+            border-radius: 12px;
+            padding: 48px 40px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .story-quote {
+            font-size: 1.35em;
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border-left: 4px solid var(--primary);
+            padding-left: 20px;
+            margin: 0 0 25px 0;
+            line-height: 1.5;
+        }
+
+        .story-text {
+            color: var(--text-sub);
+            font-size: 1.05em;
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        /* ==================== 6. 歷屆紀錄區塊 (History) ==================== */
+        .history-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .history-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .history-card:hover {
+            border-color: var(--border-highlight);
+            transform: translateY(-4px);
+        }
+
+        .history-year {
+            font-family: "Rajdhani", sans-serif;
+            font-size: 2.2em;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0 0 8px 0;
+            line-height: 1;
+        }
+
+        .history-subtitle {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .history-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: var(--text-sub);
+            font-size: 0.95em;
+            line-height: 1.8;
+        }
+
+        .history-list li strong {
+            color: #ffffff;
+        }
+
+        /* ==================== 7. 頁尾區塊 (Footer) ==================== */
+        .site-footer {
+            border-top: 1px solid var(--border-dim);
+            background-color: #08090e;
+            padding: 60px 24px 40px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            height: 38px;
+            width: auto;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        .footer-copyright {
+            color: #636875;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        /* ==================== 8. 手機版完整相容優化 (RWD) ==================== */
+        @media (max-width: 860px) {
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-spacer {
+                display: none;
+            }
+
+            /* 手機版漢堡按鈕顯示 */
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            /* 手機全螢幕抽屜式選單，支援自然捲動，絕不截斷內容 */
+            .nav-menu-container {
+                position: fixed;
+                top: var(--nav-height);
+                left: 0;
+                width: 100%;
+                height: calc(100vh - var(--nav-height));
+                height: calc(100dvh - var(--nav-height));
+                background-color: rgba(15, 16, 22, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: stretch;
+                border-left: none;
+                border-bottom: 1px solid var(--border-dim);
+                padding: 15px 20px 60px 20px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                
+                /* 滑動展開與淡入 */
+                transform: translateY(-10px);
+                opacity: 0;
+                pointer-events: none;
+                visibility: hidden;
+                transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, visibility 0.28s;
+                z-index: 9998;
+            }
+
+            .nav-menu-container.open {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: auto;
+                visibility: visible;
+            }
+
+            .nav-item {
+                width: 100%;
+                height: auto;
+                justify-content: center;
+                padding: 16px 20px;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+                font-size: 1.05em;
+                letter-spacing: 2px;
+            }
+
+            .nav-item::after {
+                display: none; /* 手機版不顯示底部指示線，改用整塊反光 */
+            }
+
+            /* 聯絡我們下拉在手機版轉為 Accordion 手風琴展開 */
+            .nav-dropdown {
+                width: 100%;
+                height: auto;
+                flex-direction: column;
+                display: flex;
+            }
+
+            .nav-dropdown > .nav-item {
+                border-right: none;
+            }
+
+            /* 手機版下拉選單本體：重設定位與位移，全寬置中，圖示文字絕不偏移 */
+            .dropdown-content {
+                position: static !important;
+                transform: none !important;
+                animation: none !important;
+                width: 100% !important;
+                margin: 12px 0 6px 0 !important;
+                background-color: rgba(22, 24, 34, 0.85);
+                border: 1px solid var(--border-dim);
+                border-radius: 8px;
+                box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+                padding: 12px;
+                display: none;
+            }
+
+            .nav-dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            /* 手機版社群按鈕樣式保證完整可視 */
+            .dropdown-icon-link {
+                padding: 12px 16px;
+                margin: 8px 0;
+                background-color: #191b26;
+                width: 100%;
+            }
+
+            .dropdown-icon-link .btn-icon {
+                width: 24px;
+                height: 24px;
+                margin-right: 14px;
+                flex-shrink: 0;
+            }
+
+            .btn-main-text {
+                font-size: 0.95em;
+            }
+
+            .btn-sub-text {
+                font-size: 0.75em;
+            }
+
+            .content-section {
+                padding: 70px 18px;
+            }
+
+            .story-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 頂部導覽列區塊 -->
+    <header class="navbar">
+        <!-- 【左區塊】LOGO -->
+        <a href="#home" class="nav-logo-link" title="回首頁">
+            <img src="logo-web.png" alt="Aetheris Finale LOGO" class="nav-logo">
+        </a>
+        
+        <!-- 手機版漢堡按鈕 (開關選單) -->
+        <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="切換選單">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- 【中區塊】選單列表與聯絡我們下拉選單 -->
+        <nav class="nav-menu-container" id="navMenu">
+            <a href="#home" class="nav-item">首頁</a>
+            <a href="#database" class="nav-item">故事大綱</a>
+            <a href="#info" class="nav-item">活動資訊</a>
+            <a href="#history" class="nav-item">歷屆宙光祭</a>
+            
+            <!-- 【聯絡我們】(支援點擊展開手風琴與桌機懸停展開) -->
+            <div class="nav-dropdown" id="contactDropdown">
+                <span class="nav-item" id="contactToggle">
+                    聯絡我們 <span class="dropdown-arrow">▾</span>
+                </span>
+                <div class="dropdown-content">
+                    <!-- FB 橫條按鈕 -->
+                    <a href="https://www.facebook.com/profile.php?id=61565098247393" target="_blank" rel="noopener noreferrer" class="dropdown-icon-link fb" title="Facebook 官方粉絲專頁">
+                        <img src="fb.png" alt="FB" class="btn-icon">
+                        <div class="btn-text-group">
+                            <span class="btn-main-text">Facebook</span>
+                            <span class="btn-sub-text">官方粉絲專頁</span>
+                        </div>
+                    </a>
+                    
+                    <!-- IG 橫條按鈕 -->
+                    <a href="https://www.instagram.com/aetheris_finale?utm_source=ig_web_button_share_sheet&dlrf=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="dropdown-icon-link ig" title="Instagram 官方帳號">
+                        <img src="ig.png" alt="IG" class="btn-icon">
+                        <div class="btn-text-group">
+                            <span class="btn-main-text">Instagram</span>
+                            <span class="btn-sub-text">最新活動花絮</span>
+                        </div>
+                    </a>
+                    
+                    <!-- Gmail 橫條按鈕 -->
+                    <a href="mailto:aetherisfinale@gmail.com" class="dropdown-icon-link email" title="寄信至 Gmail">
+                        <img src="gmail.png" alt="Gmail" class="btn-icon">
+                        <div class="btn-text-group">
+                            <span class="btn-main-text">Gmail 聯絡</span>
+                            <span class="btn-sub-text">商業與合作洽談</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 【右區塊】桌機版對稱平衡方塊 -->
+        <div class="nav-spacer"></div>
+    </header>
+
+    <!-- 網頁主要內容區 -->
+    <main class="main-content">
+        
+        <!-- 1. 首頁主視覺海報區塊 (Hero Section) -->
+        <section class="hero-banner" id="home">
+            <!-- 背景宣傳大圖 -->
+            <div class="hero-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1920&q=80" alt="宙光祭主視覺背景" class="hero-img">
+            </div>
+
+            <!-- 活動核心文字與霓虹按鈕 -->
+            <div class="hero-overlay-content">
+                <p class="hero-subtitle">サイリウムダンスの最高峰へ</p>
+                <h1 class="hero-title">Aetheris Finale <span>宙光祭</span></h1>
+                <p class="hero-desc">踏碎深夜的黑暗，點燃屬於你的螢光軌跡。全台最強打師頂尖對決，即將引爆。</p>
+                <a href="#info" class="hero-action-btn">查看賽事活動資訊</a>
+            </div>
+        </section>
+
+        <!-- 2. 故事大綱與理念區塊 (Story & Concept) -->
+        <section class="content-section" id="database">
+            <div class="section-header">
+                <span class="section-tag">CONCEPT & STORY</span>
+                <h2 class="section-title">故事大綱</h2>
+                <div class="section-title-line"></div>
+            </div>
+
+            <div class="story-container">
+                <p class="story-quote">「當螢光割裂黑暗，每一道軌跡，都是靈魂燃燒的證明。」</p>
+                <p class="story-text">
+                    「Aetheris Finale 宙光祭」是為所有對 Cyalume Dance（サイリウムダンス / ヲタ芸）抱持純粹熱忱的表演者與打師所打造的最高舞台。
+                </p>
+                <p class="story-text">
+                    在這裡，我們不只追求速度與技巧的極限，更追求肢體、節奏與光芒凝聚而成的藝術爆發。每一位踏上宙光舞台的打師，都將用手中的雙棒，在剎那間劃出屬於自己的永恆星群。
+                </p>
+            </div>
+        </section>
+
+        <!-- 3. 活動與賽事資訊區塊 (Event Info) -->
+        <section class="content-section" id="info">
+            <div class="section-header">
+                <span class="section-tag">EVENT INFORMATION</span>
+                <h2 class="section-title">活動與賽事資訊</h2>
+                <div class="section-title-line"></div>
+            </div>
+
+            <div class="cards-grid">
+                <!-- 卡片 1: 賽程日期與地點 -->
+                <div class="info-card">
+                    <span class="card-badge">SCHEDULE & VENUE</span>
+                    <h3 class="card-title">活動日程與場地</h3>
+                    <p class="card-desc">
+                        <strong>時間：</strong>即將公開（籌備中）<br>
+                        <strong>地點：</strong>全台大型展演中心（敬請鎖定官方公告）<br>
+                        <strong>觀眾入場：</strong>開放實體觀戰與現場應援。
+                    </p>
+                </div>
+
+                <!-- 卡片 2: 賽制規章 -->
+                <div class="info-card">
+                    <span class="card-badge">TOURNAMENT RULES</span>
+                    <h3 class="card-title">賽制與評審規則</h3>
+                    <p class="card-desc">
+                        <strong>項目：</strong>1on1 Cyalume Dance Battle<br>
+                        <strong>評分維度：</strong>動作俐落度（Form）、光軌視覺感（Visual）、節奏表現力（Musicality）與原創招式。
+                    </p>
+                </div>
+
+                <!-- 卡片 3: 報名與票務 -->
+                <div class="info-card">
+                    <span class="card-badge">REGISTRATION & TICKETS</span>
+                    <h3 class="card-title">選手報名與票務</h3>
+                    <p class="card-desc">
+                        <strong>選手報名：</strong>線上表單登記，限額海選錄取。<br>
+                        <strong>一般票券：</strong>預售票與現場票方案陸續釋出。<br>
+                        <strong>合作贊助：</strong>歡迎透過官方信箱洽詢商務合作。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 歷屆宙光祭紀錄 (History Archive) -->
+        <section class="content-section" id="history">
+            <div class="section-header">
+                <span class="section-tag">HISTORY & ARCHIVE</span>
+                <h2 class="section-title">歷屆宙光祭</h2>
+                <div class="section-title-line"></div>
+            </div>
+
+            <div class="history-timeline">
+                <div class="history-card">
+                    <div class="history-year">2026</div>
+                    <div class="history-subtitle">Aetheris Finale 2026 — 黎明破曉</div>
+                    <ul class="history-list">
+                        <li><strong>狀態：</strong>籌備中 / 最新一屆即將引爆</li>
+                        <li><strong>主軸：</strong>極限光軌頂尖對決</li>
+                        <li><strong>焦點：</strong>全台頂尖打師會師爭冠</li>
+                    </ul>
+                </div>
+
+                <div class="history-card">
+                    <div class="history-year">ORIGIN</div>
+                    <div class="history-subtitle">宙光祭的誕生</div>
+                    <ul class="history-list">
+                        <li><strong>起點：</strong>匯聚熱愛螢光棒舞蹈的靈魂</li>
+                        <li><strong>理念：</strong>打破既定框架，打造最純粹的競技舞台</li>
+                        <li><strong>傳承：</strong>讓每道光芒在夜空中交織共鳴</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 頁尾區塊 -->
+    <footer class="site-footer">
+        <a href="#home">
+            <img src="logo-web.png" alt="Aetheris Finale LOGO" class="footer-logo">
+        </a>
+        <div class="footer-links">
+            <a href="#home" class="footer-link">首頁</a>
+            <a href="#database" class="footer-link">故事大綱</a>
+            <a href="#info" class="footer-link">活動資訊</a>
+            <a href="#history" class="footer-link">歷屆紀錄</a>
+            <a href="mailto:aetherisfinale@gmail.com" class="footer-link">商業合作</a>
+        </div>
+        <p class="footer-copyright">
+            © 2026 Aetheris Finale 宙光祭. All Rights Reserved. サイリウムダンスの最高峰へ。
+        </p>
+    </footer>
+
+    <!-- 互動控制腳本 -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        const contactDropdown = document.getElementById('contactDropdown');
+        const contactToggle = document.getElementById('contactToggle');
+        const navLinks = document.querySelectorAll('.nav-menu-container > .nav-item');
+
+        // 手機漢堡選單開關
+        if (mobileMenuBtn && navMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = navMenu.classList.toggle('open');
+                mobileMenuBtn.classList.toggle('active');
+                
+                // 選單打開時鎖定背景滑動
+                document.body.style.overflow = isOpen ? 'hidden' : '';
+            });
+        }
+
+        // 手機版點擊「聯絡我們」展開/收合
+        if (contactToggle && contactDropdown) {
+            contactToggle.addEventListener('click', (e) => {
+                if (window.innerWidth <= 860) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    contactDropdown.classList.toggle('active');
+                }
+            });
+        }
+
+        // 點擊一般導覽連結後自動關閉手機選單
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 860) {
+                    mobileMenuBtn.classList.remove('active');
+                    navMenu.classList.remove('open');
+                    contactDropdown.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // 點擊社群連結後也關閉選單
+        const socialLinks = document.querySelectorAll('.dropdown-icon-link');
+        socialLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 860) {
+                    mobileMenuBtn.classList.remove('active');
+                    navMenu.classList.remove('open');
+                    contactDropdown.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
